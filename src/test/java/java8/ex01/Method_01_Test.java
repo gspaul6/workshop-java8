@@ -4,6 +4,7 @@ import java8.data.Data;
 import java8.data.Person;
 import org.junit.Test;
 
+import java.util.Iterator;
 import java.util.List;
 
 import static org.hamcrest.Matchers.*;
@@ -20,6 +21,17 @@ public class Method_01_Test {
 
         // TODO créer une méthode int sumAge()
         // TODO Cette méthode retourne le résultat de l'addition des ages des personnes
+        default int sumAge(List<Person>ageOfPeople){
+int s=0;
+        	for(int i=0; i<ageOfPeople.size();i++)
+        	{ int j=0;
+        		 j=ageOfPeople.get(i).getAge();
+        		 s+=j;
+        	        		
+        	}
+        	return s;
+        	
+        }
     }
     // end::IDao[]
 
@@ -50,7 +62,8 @@ public class Method_01_Test {
 
         // TODO invoquer la méthode sumAge pour que le test soit passant
         int result = 0;
-
+       result = daoA.sumAge(daoA.people);
+       System.out.println(result);
         assertThat(result, is(210));
     }
 
@@ -61,7 +74,8 @@ public class Method_01_Test {
 
         // TODO invoquer la méthode sumAge pour que le test soit passant
         int result = 0;
-
+result= daoB.sumAge(daoB.people);
+System.out.println(result);
         assertThat(result, is(5050));
 
     }
