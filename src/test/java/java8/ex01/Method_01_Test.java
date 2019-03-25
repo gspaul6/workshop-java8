@@ -22,7 +22,7 @@ public class Method_01_Test {
         // TODO créer une méthode int sumAge()
         // TODO Cette méthode retourne le résultat de l'addition des ages des personnes
         default int sumAge(List<Person>ageOfPeople){
-int s=0;
+        	int s=0;
         	for(int i=0; i<ageOfPeople.size();i++)
         	{ int j=0;
         		 j=ageOfPeople.get(i).getAge();
