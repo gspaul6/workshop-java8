@@ -30,7 +30,7 @@ public class Method_01_Test {
         	        		
         	}
         	return s;
-        	
+        // return findAll().size();	
         }
     }
     // end::IDao[]
