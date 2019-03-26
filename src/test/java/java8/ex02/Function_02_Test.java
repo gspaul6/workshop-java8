@@ -14,24 +14,30 @@ import static org.junit.Assert.*;
  */
 public class Function_02_Test {
 
-    //  tag::buildAccount[]
-    // TODO Compléter la fonction buildAccount
-    // TODO la fonction possède 2 paramètres en entrée : une personne et un solde
-    BiFunction<Person, Integer, Account> buildAccount = null;
-    //  end::buildAccount[]
+	// tag::buildAccount[]
+	// TODO Compléter la fonction buildAccount
+	// TODO la fonction possède 2 paramètres en entrée : une personne et un
+	// solde
+	BiFunction<Person, Integer, Account> buildAccount = (p, j) -> {
+		Account a1 = new Account();
+		a1.setOwner(p);
+		a1.setBalance(j);
+		return a1;
+	};
+	// end::buildAccount[]
 
-    @Test
-    public void test_build_account() throws Exception {
+	@Test
+	public void test_build_account() throws Exception {
+		Person p = new Person("John","France",80,"pass");
 
-        // TODO invoquer la fonction buildAccount pour que le test soit passant
-        Account account = null;
+		// TODO invoquer la fonction buildAccount pour que le test soit passant
+		Account account = buildAccount.apply(p, 500);
 
-        assertThat(account, hasProperty("balance", is(500)));
-        assertThat(account.getOwner(), hasProperty("firstname", is("John")));
-        assertThat(account.getOwner(), hasProperty("lastname", is("France")));
-        assertThat(account.getOwner(), hasProperty("age", is(80)));
-        assertThat(account.getOwner(), hasProperty("password", is("pass")));
-    }
-
+		assertThat(account, hasProperty("balance", is(500)));
+		assertThat(account.getOwner(), hasProperty("firstname", is("John")));
+		assertThat(account.getOwner(), hasProperty("lastname", is("France")));
+		assertThat(account.getOwner(), hasProperty("age", is(80)));
+		assertThat(account.getOwner(), hasProperty("password", is("pass")));
+	}
 
 }

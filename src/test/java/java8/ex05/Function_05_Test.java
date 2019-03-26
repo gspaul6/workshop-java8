@@ -18,11 +18,12 @@ public class Function_05_Test {
     //tag::functions[]
     // TODO compléter la fonction
     // TODO modifier le mot de passe en "secret"
-    Consumer<Person> changePasswordToSecret = null;
+    Consumer<Person> changePasswordToSecret = p->p.setPassword("secret");
+    
 
     // TODO compléter la fonction
     // TODO vérifier que l'age > 4 avec une assertion JUnit
-    Consumer<Person> verifyAge = null;
+    Consumer<Person> verifyAge = p->(p.getAge()>4);
 
     // TODO compléter la fonction
     // TODO vérifier que le mot de passe est "secret" avec une assertion JUnit

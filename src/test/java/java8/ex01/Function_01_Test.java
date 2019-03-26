@@ -9,92 +9,109 @@ import java.util.function.Function;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
 
-
 /**
  * Exercice 01 - java.util.function.Function
  */
 public class Function_01_Test {
 
-    /******** PART 1 - Integer -> Person *******/
+	/******** PART 1 - Integer -> Person *******/
 
-    // tag::intToPerson[]
-    // TODO Compléter la définition de cette fonction
-    // TODO Cette fonction permet de transformer un entier en objet Person
-    // TODO le prenom sera de la forme "first_<ENTIER>"
-    // TODO le nom sera de la forme "last_<ENTIER>"
-    // TODO l'age sera de la forme "<ENTIER>"
-    // TODO le mot de passe sera de la forme "pass_<ENTIER>"
-    private Function<Integer, Person> intToPerson = null;
-    // end::intToPerson[]
+	// tag::intToPerson[]
+	// TODO Compléter la définition de cette fonction
+	// TODO Cette fonction permet de transformer un entier en objet Person
+	// TODO le prenom sera de la forme "first_<ENTIER>"
+	// TODO le nom sera de la forme "last_<ENTIER>"
+	// TODO l'age sera de la forme "<ENTIER>"
+	// TODO le mot de passe sera de la forme "pass_<ENTIER>"
+	private Function<Integer, Person> intToPerson = g -> {
+		String first = "first_" + g;
+		String last = "last_" + g;
+		Integer age = g;
+		String pass = "pass_" + g;
+		Person p = new Person(first, last, age, pass);
 
-    @Test
-    public void test_intToPerson() throws Exception {
+		return p;
 
-        // TODO invoquer la fonction intToPerson avec en paramètre l'entier 10.
-        Person result = null;
+	};
+	// end::intToPerson[]
 
-        assertThat(result, hasProperty("firstname", is("first_10")));
-        assertThat(result, hasProperty("lastname", is("last_10")));
-        assertThat(result, hasProperty("age", is(10)));
-        assertThat(result, hasProperty("password", is("pass_10")));
-    }
+	@Test
+	public void test_intToPerson() throws Exception {
 
-    /******** PART 2 - Person -> Account *******/
+		Person a1 = new Person();
+		// TODO invoquer la fonction intToPerson avec en paramètre l'entier 10.
+		Person result = intToPerson.apply(10);
 
-    // tag::personToAccount[]
-    // TODO Compléter la définition de cette fonction
-    // TODO la propriété owner est valorisé avec la personne en paramètre
-    // TODO la propriété balance est valorisé à 1000
-    private Function<Person, Account> personToAccount = null;
-    // end::personToAccount[]
+		assertThat(result, hasProperty("firstname", is("first_10")));
+		assertThat(result, hasProperty("lastname", is("last_10")));
+		assertThat(result, hasProperty("age", is(10)));
+		assertThat(result, hasProperty("password", is("pass_10")));
+	}
 
-    @Test
-    public void test_personToAccount() throws Exception {
+	/******** PART 2 - Person -> Account *******/
 
-        Person person = new Person("Jules", "France", 10, "pass");
+	// tag::personToAccount[]
+	// TODO Compléter la définition de cette fonction
+	// TODO la propriété owner est valorisé avec la personne en paramètre
+	// TODO la propriété balance est valorisé à 1000
+	private Function<Person, Account> personToAccount = q -> {
 
-        // TODO invoquer la fonction personToAccount
-        Account result = null;
+		Account a2 = new Account();
+		a2.setOwner(q);
+		a2.setBalance(1000);
 
-        assertThat(result, hasProperty("owner", is(person)));
-        assertThat(result, hasProperty("balance", is(1000)));
-    }
+		return a2;
+	};
+	// end::personToAccount[]
 
+	@Test
+	public void test_personToAccount() throws Exception {
 
-    /******** PART 3 - Integer -> Account avec compose *******/
+		Person person = new Person("Jules", "France", 10, "pass");
 
-    // tag::intToAccountWithCompose[]
-    // TODO Compléter la définition de cette fonction
-    // TODO Utiliser la méthode compose pour réutiliser les fonctions intToPerson et personToAccount
-    private Function<Integer, Account> intToAccountWithCompose = null;
-    // end::intToAccountWithCompose[]
+		// TODO invoquer la fonction personToAccount
+		Account result = personToAccount.apply(person);
 
+		assertThat(result, hasProperty("owner", is(person)));
+		assertThat(result, hasProperty("balance", is(1000)));
+	}
 
-    @Test
-    public void test_intToAccount_with_Compose() throws Exception {
+	/******** PART 3 - Integer -> Account avec compose *******/
 
-        // TODO invoquer la fonction intToAccountWithCompose avec l'entier 10
-        Account result = null;
+	// tag::intToAccountWithCompose[]
+	// TODO Compléter la définition de cette fonction
+	// TODO Utiliser la méthode compose pour réutiliser les fonctions
+	// intToPerson et personToAccount
+	private Function<Integer, Account> intToAccountWithCompose = personToAccount.compose(intToPerson);
+	// end::intToAccountWithCompose[]
 
-        assertThat(result.getOwner(), hasProperty("firstname", is("first_10")));
-        assertThat(result, hasProperty("balance", is(1000)));
-    }
+	@Test
+	public void test_intToAccount_with_Compose() throws Exception {
 
-    /******** PART 4 - Integer -> Account avec andThen *******/
+		// TODO invoquer la fonction intToAccountWithCompose avec l'entier 10
+		Account result = intToAccountWithCompose.apply(10);
 
-    // tag::intToAccountWithAndThen[]
-    // TODO Compléter la définition de cette fonction
-    // TODO Utiliser la méthode andThen pour réutiliser les fonctions intToPerson et personToAccount
-    private Function<Integer, Account> intToAccountWithAndThen = null;
-    // end::intToAccountWithAndThen[]
+		assertThat(result.getOwner(), hasProperty("firstname", is("first_10")));
+		assertThat(result, hasProperty("balance", is(1000)));
+	}
 
-    @Test
-    public void test_intToAccount_with_AndThen() throws Exception {
+	/******** PART 4 - Integer -> Account avec andThen *******/
 
-        // TODO invoquer la fonction intToAccountWithAndThen avec l'entier 11
-        Account result = null;
+	// tag::intToAccountWithAndThen[]
+	// TODO Compléter la définition de cette fonction
+	// TODO Utiliser la méthode andThen pour réutiliser les fonctions
+	// intToPerson et personToAccount
+	private Function<Integer, Account> intToAccountWithAndThen = intToPerson.andThen(personToAccount);
 
-        assertThat(result.getOwner(), hasProperty("firstname", is("first_11")));
-        assertThat(result, hasProperty("balance", is(1000)));
-    }
+	// end::intToAccountWithAndThen[]
+
+	@Test
+	public void test_intToAccount_with_AndThen() throws Exception {
+
+		// TODO invoquer la fonction intToAccountWithAndThen avec l'entier 11
+		Account result = intToAccountWithAndThen.apply(11);
+
+		assertThat(result.getOwner(), hasProperty("firstname", is("first_11")));
+		assertThat(result, hasProperty("balance", is(1000)));
+	}
 }
